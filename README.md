@@ -1,5 +1,5 @@
 # SLEEPy - an adaptation of the Soil-Landscape Estimation and Evaluation Program
-###### *Rodrigo de Queiroga Miranda, Josiclêda Domiciano Galvíncio*
+###### *Rodrigo de Queiroga Miranda, Rodolfo Luiz Bezerra Nóbrega, Josiclêda Domiciano Galvíncio*
 ###### Contact: rodrigo.qmiranda@gmail.com
 
 ### About
