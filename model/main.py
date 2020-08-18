@@ -168,7 +168,7 @@ class main(object):
 
         X, Y = self.make_dataset(table=self.t, var='SB', additional=['L_MAX', 'LAYER', 'SOL_Z'])
         X, Y = self.duplicate_dataset(X, Y)
-        self.SB = continuous.model('SB', X, Y, x, logger=logger)
+        self.SB = continuous.model('SB', X, Y, x, logger=logger, load_save=True)
         del X, Y
 
         X, Y = self.make_dataset(table=self.t, var='CS', additional=['L_MAX', 'LAYER', 'SOL_Z', 'SOL_SAND'])
@@ -192,6 +192,6 @@ if __name__ == '__main__':
     pbar = ProgressBar()
     pbar.register()
     config.set(scheduler='processes')
-    main(r"D:\My_files\SLEEP_Tool\SleepPy\model\training.txt",
-        r"D:\My_files\SLEEP_Tool\SleepPy\model\modelling.txt").run()
+    main(r"C:\Users\putzr\Documents\GitHub\sleepy\model\training.txt",
+         r"C:\Users\putzr\Documents\GitHub\sleepy\model\modelling.txt").run()
     pbar.unregister()

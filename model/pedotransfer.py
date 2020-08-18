@@ -296,5 +296,5 @@ class model(object):
         self.calc_SOL_K(method='BK2007')
         print(self.get_stats(self.SOL_K, var='K_BK2007', hist=True))
 
-df = dataset("D:\My_files\SLEEP_Tool\SleepPy\model")
+df = dataset(r"C:\Users\putzr\Documents\GitHub\sleepy\model")
 model(df)

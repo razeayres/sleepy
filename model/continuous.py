@@ -26,10 +26,12 @@ class model(object):
         if not self.hp == None:
             [self.logger.info('Hyperparameter "{kn}" = "{kv}"'.format(kn=i, kv=self.hp[i])) for i in self.hp.keys()]
         self.logger.info("Best predictors = %s" % ", ".join(self.columns[self.model.get_support(indices=True)]))
+        self.logger.info("Importances = %s" % ", ".join(map(str, self.model.estimator_.feature_importances_)))
         Y_pred = self.model.predict(self.X_test)
         stats = (metrics.r2_score(self.Y_test, Y_pred),
-                 metrics.mean_squared_error(self.Y_test, Y_pred)**0.5)
-        self.logger.info("r2 = %s, RMSE = %s" % stats)
+                 metrics.mean_squared_error(self.Y_test, Y_pred)**0.5,
+                 (sum(self.Y_test - Y_pred)/sum(self.Y_test))*100)
+        self.logger.info("r2 = %s, RMSE = %s, PBIAS = %s" % stats)
 
     def train(self):
         seed = random.seed(42)
