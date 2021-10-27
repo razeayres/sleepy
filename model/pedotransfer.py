@@ -5,8 +5,8 @@ import pandas, numpy
 class dataset(object):
     def __init__(self, workdir):
         self.workdir = workdir
-        self.output = path.join(self.workdir,"output.txt")
-        self.df = pandas.read_csv(self.output, delimiter=' ')
+        self.output = path.join(self.workdir,"banco_de_dados_08042021.csv")
+        self.df = pandas.read_csv(self.output, delimiter=',')
 
 class model(object):
     def __init__(self, df):
@@ -16,6 +16,8 @@ class model(object):
 
     def get_stats(self, i, var='hist.txt', hist=False):
         if hist == True:
+            numpy.savetxt('data_' + var, i)
+
             n = 10000
             y = numpy.histogram(i, bins=n)
             x = numpy.linspace(min(i), max(i), num=n)
@@ -156,6 +158,7 @@ class model(object):
             rv = (pr * rw)/(1 - rw * (1 - pr))
 
             self.SOL_BD = pn * (1 - rv) + (rv * 2.65)
+            # print(list(map(min, [t_s33, t_33, t_s, pn, rw, pr, rv, self.SOL_BD])))
             print(self.get_stats(self.SOL_BD, var='BD_SR2006', hist=True))
 
             self.t_33 = t_33    # global var
@@ -296,5 +299,5 @@ class model(object):
         self.calc_SOL_K(method='BK2007')
         print(self.get_stats(self.SOL_K, var='K_BK2007', hist=True))
 
-df = dataset(r"C:\Users\putzr\Documents\GitHub\sleepy\model")
+df = dataset(r"D:\My_files\Meus_artigos\Em_andamento\Artigo_de_solos_2019\Resultados\importances\banco_de_dados_08042021")
 model(df)

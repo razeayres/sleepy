@@ -36,7 +36,7 @@ class model(object):
     def train(self):
         seed = random.seed(42)
         bins = qcut(self.Y, 5, labels=False, duplicates='drop')
-        X_train, self.X_test, Y_train, self.Y_test = train_test_split(self.X, self.Y, test_size=0.3, stratify=bins, random_state=42)
+        X_train, self.X_test, Y_train, self.Y_test = train_test_split(self.X, self.Y, test_size=0.2, stratify=bins, random_state=42)
         estimator = GradientBoostingRegressor(random_state=42)
         selector = RFECV(estimator, cv=2, min_features_to_select=1)
         if self.load_save == True:
@@ -51,8 +51,8 @@ class model(object):
                     'estimator__min_samples_leaf': [int(x) for x in linspace(2, 50, num = 49)]}
             # client = Client('192.168.200.1:8786')
             self.rscv = RandomizedSearchCV(estimator=selector, param_distributions=grid,
-                                           n_iter=50, scoring='r2', cv=2,        # <-- change the number os simulations here! 4000 is the original
-                                           iid=False, random_state=42, n_jobs=3)  # , scheduler=client)
+                                           n_iter=4000, scoring='r2', cv=2,        # <-- change the number os simulations here! 4000 is the original
+                                           iid=False, random_state=42)  # , n_jobs=3, scheduler=client)
             self.rscv.fit(X_train, Y_train)
             self.model = self.rscv.best_estimator_
             joblib.dump(self.model, self.name+'.pkl', compress=1)

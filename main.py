@@ -2,10 +2,10 @@ import environment, variables, processing
 from os import path
 from tools import counter
 
-workfolder = r'D:\My_files\Meus_artigos\Em_andamento\Artigo_de_solos_2019\Projetos\EMBRAPA'
+workfolder = r'D:\My_files\Meus_artigos\Em_andamento\Artigo_de_solos_2019\Projetos\TOPODATA'
 DEM = path.join(workfolder, 'dem.tif')
 soil_obs = path.join(workfolder, 'OBS_SOIL.shp')
-basins = path.join(workfolder, 'watersheds.tif')
+basins = None   # path.join(workfolder, 'watersheds.tif')
 
 e = environment.setup(workfolder, DEM, soil_obs, basins)
 i = variables.initialize(e)

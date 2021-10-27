@@ -108,18 +108,18 @@ class main(object):
         return(X, Y)
 
     def write_results(self):
-        x = self.make_dataset(table=self.m)
+        x = self.make_dataset(table=self.m, additional=['X', 'Y'])
         x = self.modify_dataset(x, series=self.L_MAX.Y_mod, name='L_MAX', Create_LAYER=True)
         x = self.modify_dataset(x, series=self.SOL_Z.Y_mod, name='SOL_Z')
         x = self.modify_dataset(x, series=self.SOL_SAND.Y_mod, name='SOL_SAND')
-        x = self.modify_dataset(x, series=self.SOL_CLAY.Y_mod, name='SOL_CLAY')
-        x = self.modify_dataset(x, series=self.SOL_SILT.Y_mod, name='SOL_SILT')
-        x = self.modify_dataset(x, series=self.SOL_ROCK.Y_mod, name='SOL_ROCK')
-        x = self.modify_dataset(x, series=self.SOL_CBN.Y_mod, name='SOL_CBN')
-        x = self.modify_dataset(x, series=self.SB.Y_mod, name='SB')
-        x = self.modify_dataset(x, series=self.SOL_SAND.Y_mod, name='SOL_SAND')
-        x = self.modify_dataset(x, series=self.CS.Y_mod, name='CS')
-        x = self.modify_dataset(x, series=self.FS.Y_mod, name='FS')
+        # x = self.modify_dataset(x, series=self.SOL_CLAY.Y_mod, name='SOL_CLAY')
+        # x = self.modify_dataset(x, series=self.SOL_SILT.Y_mod, name='SOL_SILT')
+        # x = self.modify_dataset(x, series=self.SOL_ROCK.Y_mod, name='SOL_ROCK')
+        # x = self.modify_dataset(x, series=self.SOL_CBN.Y_mod, name='SOL_CBN')
+        # x = self.modify_dataset(x, series=self.SB.Y_mod, name='SB')
+        # x = self.modify_dataset(x, series=self.SOL_SAND.Y_mod, name='SOL_SAND')
+        # x = self.modify_dataset(x, series=self.CS.Y_mod, name='CS')
+        # x = self.modify_dataset(x, series=self.FS.Y_mod, name='FS')
         savetxt('output.txt', x, header=" ".join(x.columns), comments='')
 
     def run(self):
@@ -127,6 +127,8 @@ class main(object):
                             level=logging.INFO,
                             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         logger = logging.getLogger('BM')
+        import warnings
+        warnings.filterwarnings('ignore')
         # self.get_metrics()
 
         X, Y = self.make_dataset(table=self.t, var='L_MAX')
@@ -146,41 +148,41 @@ class main(object):
         self.SOL_SAND = continuous.model('SOL_SAND', X, Y, x, logger=logger, load_save=True)
         del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='SOL_CLAY', additional=['L_MAX', 'LAYER', 'SOL_Z'])
-        X, Y = self.duplicate_dataset(X, Y)
-        self.SOL_CLAY = continuous.model('SOL_CLAY', X, Y, x, logger=logger, load_save=True)
-        del X, Y
+        # X, Y = self.make_dataset(table=self.t, var='SOL_CLAY', additional=['L_MAX', 'LAYER', 'SOL_Z'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # self.SOL_CLAY = continuous.model('SOL_CLAY', X, Y, x, logger=logger, load_save=True)
+        # del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='SOL_SILT', additional=['L_MAX', 'LAYER', 'SOL_Z'])
-        X, Y = self.duplicate_dataset(X, Y)
-        self.SOL_SILT = continuous.model('SOL_SILT', X, Y, x, logger=logger, load_save=True)
-        del X, Y
+        # X, Y = self.make_dataset(table=self.t, var='SOL_SILT', additional=['L_MAX', 'LAYER', 'SOL_Z'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # self.SOL_SILT = continuous.model('SOL_SILT', X, Y, x, logger=logger, load_save=True)
+        # del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='SOL_ROCK', additional=['L_MAX', 'LAYER', 'SOL_Z'])
-        X, Y = self.duplicate_dataset(X, Y)
-        self.SOL_ROCK = continuous.model('SOL_ROCK', X, Y, x, logger=logger, load_save=True)
-        del X, Y
+        # X, Y = self.make_dataset(table=self.t, var='SOL_ROCK', additional=['L_MAX', 'LAYER', 'SOL_Z'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # self.SOL_ROCK = continuous.model('SOL_ROCK', X, Y, x, logger=logger, load_save=True)
+        # del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='SOL_CBN', additional=['L_MAX', 'LAYER', 'SOL_Z'])
-        X, Y = self.duplicate_dataset(X, Y)
-        self.SOL_CBN = continuous.model('SOL_CBN', X, Y, x, logger=logger, load_save=True)
-        del X, Y
+        # X, Y = self.make_dataset(table=self.t, var='SOL_CBN', additional=['L_MAX', 'LAYER', 'SOL_Z'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # self.SOL_CBN = continuous.model('SOL_CBN', X, Y, x, logger=logger, load_save=True)
+        # del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='SB', additional=['L_MAX', 'LAYER', 'SOL_Z'])
-        X, Y = self.duplicate_dataset(X, Y)
-        self.SB = continuous.model('SB', X, Y, x, logger=logger, load_save=True)
-        del X, Y
+        # X, Y = self.make_dataset(table=self.t, var='SB', additional=['L_MAX', 'LAYER', 'SOL_Z'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # self.SB = continuous.model('SB', X, Y, x, logger=logger, load_save=True)
+        # del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='CS', additional=['L_MAX', 'LAYER', 'SOL_Z', 'SOL_SAND'])
-        X, Y = self.duplicate_dataset(X, Y)
-        x = self.modify_dataset(x, series=self.SOL_Z.Y_mod, name='SOL_SAND')
-        self.CS = continuous.model('CS', X, Y, x, logger=logger, load_save=True)
-        del X, Y
+        # X, Y = self.make_dataset(table=self.t, var='CS', additional=['L_MAX', 'LAYER', 'SOL_Z', 'SOL_SAND'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # x = self.modify_dataset(x, series=self.SOL_Z.Y_mod, name='SOL_SAND')
+        # self.CS = continuous.model('CS', X, Y, x, logger=logger, load_save=True)
+        # del X, Y
 
-        X, Y = self.make_dataset(table=self.t, var='FS', additional=['L_MAX', 'LAYER', 'SOL_Z', 'SOL_SAND'])
-        X, Y = self.duplicate_dataset(X, Y)
-        self.FS = continuous.model('FS', X, Y, x, logger=logger, load_save=True)
-        del X, Y, x
+        # X, Y = self.make_dataset(table=self.t, var='FS', additional=['L_MAX', 'LAYER', 'SOL_Z', 'SOL_SAND'])
+        # X, Y = self.duplicate_dataset(X, Y)
+        # self.FS = continuous.model('FS', X, Y, x, logger=logger, load_save=True)
+        # del X, Y, x
 
         self.write_results()
 

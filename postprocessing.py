@@ -59,7 +59,7 @@ class start(object):
             # Note that it tries to remove
             # the ".tif" extension if it
             # exists in the name of the file
-            arcpy.gp.ZonalStatistics_sa(self.i.fc_shp, "OBJECTID", i[0], i[0].replace(".tif", "")+"_zs", "MEAN", "DATA")    
+            arcpy.gp.ZonalStatistics_sa(self.i.fc_shp, "OBJECTID", i[0], i[0].replace(".tif", "")+"_zs", "MEAN", "DATA")    # self.i.fc_shp/self.i.facets
             # arcpy.RasterToASCII_conversion(in_raster=i[0]+"_zs",out_ascii_file=i[0]+"_zs"+".txt")   # creates ASCII rasters to be used in modelling
 
         # this part uses the zonal
@@ -79,7 +79,7 @@ class start(object):
         #### this is to process the modelling shapefile ####
         while arcpy.Exists(self.i.st):
             arcpy.Delete_management(self.i.st)
-        arcpy.FeatureToPoint_management(in_features=self.i.fc_shp, out_feature_class=self.i.st, point_location="INSIDE")
+        arcpy.FeatureToPoint_management(in_features=self.i.fc_shp, out_feature_class=self.i.st, point_location="INSIDE")    # self.i.fc_shp/self.i.facets
         ####################################################
 
         self.make_zs()

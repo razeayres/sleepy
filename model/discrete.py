@@ -32,6 +32,10 @@ class model(object):
             [self.logger.info('Hyperparameter "{kn}" = "{kv}"'.format(kn=i, kv=self.hp[i])) for i in self.hp.keys()]
         self.logger.info("Best predictors = %s" % ", ".join(self.columns[self.model.get_support(indices=True)]))
         self.logger.info("Importances = %s" % ", ".join(map(str, self.model.estimator_.feature_importances_)))
+
+        # self.logger.info(self.rscv.cv_results_)
+        # self.logger.info(self.rscv.best_score_)
+
         Y_pred = self.model.predict(self.X_test)
         stats = (metrics.accuracy_score(self.Y_test, Y_pred),
                  min(Y_pred),
@@ -40,9 +44,9 @@ class model(object):
 
     def train(self):
         seed = random.seed(42)
-        X_train, self.X_test, Y_train, self.Y_test = train_test_split(self.X, self.Y, test_size=0.3, stratify=self.Y, random_state=42)
+        X_train, self.X_test, Y_train, self.Y_test = train_test_split(self.X, self.Y, test_size=0.2, stratify=self.Y, random_state=42)
         estimator = GradientBoostingClassifier(random_state=42)
-        selector = RFECV(estimator, cv=2, min_features_to_select=3)
+        selector = RFECV(estimator, cv=2, min_features_to_select=1)
         if self.load_save == True:
             self.logger.warning('The predefined parameters are going to be used')
             self.model = joblib.load(self.name+'.pkl')
@@ -55,7 +59,7 @@ class model(object):
                     'estimator__min_samples_leaf': [int(x) for x in linspace(2, 50, num = 49)]}
             # client = Client('192.168.200.1:8786')
             self.rscv = RandomizedSearchCV(estimator=selector, param_distributions=grid,
-                                           n_iter=400, scoring='accuracy', cv=2,        # <-- change the number os simulations here!
+                                           n_iter=5, scoring='accuracy', cv=2,        # <-- change the number os simulations here!
                                            iid=False, random_state=42)  # , scheduler=client)
             self.rscv.fit(X_train, Y_train)
             self.model = self.rscv.best_estimator_
